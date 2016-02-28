@@ -116,6 +116,8 @@ hist(totalStepsDay$steps,
 
 ## add rug representation of the data to the plot to show the density of the observation:
 rug(totalStepsDay$steps)
+
+dev.off()
 ````
 
 Calculate and report the **mean** and **median** total number of steps taken per day

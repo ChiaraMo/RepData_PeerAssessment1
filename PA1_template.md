@@ -164,6 +164,15 @@ rug(totalStepsDay$steps)
 
 ![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
+```r
+dev.off()
+```
+
+```
+## png 
+##   3
+```
+
 Calculate and report the **mean** and **median** total number of steps taken per day
 
 
