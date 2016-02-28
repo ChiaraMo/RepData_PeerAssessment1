@@ -143,7 +143,12 @@ head(totalStepsDay)
 
 Plot the histogram of total number of steps taken each day. 
 
-Graphics device used is the screen device.
+Prepare the output file Histogram1.png and define the area
+
+```r
+png(file="Histogram1.png", height=480, width=480)
+```
+        
 
 ```r
 hist(totalStepsDay$steps,
@@ -157,7 +162,7 @@ hist(totalStepsDay$steps,
 rug(totalStepsDay$steps)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
 Calculate and report the **mean** and **median** total number of steps taken per day
 
@@ -232,7 +237,7 @@ Create the time series plot
 xyplot(steps ~ interval, data = avgStepsInterval, type = "l", main = "Daily Activity Pattern")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 
 
 Find the maximum of number of steps taken in a 5-minute interval, averaged across all days
 
@@ -336,7 +341,7 @@ hist(totalStepsDayFill$steps,
 rug(totalStepsDayFill$steps)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-21-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-22-1.png) 
 
 Calculate and report the **mean** and **median** total number of steps taken per day
 
@@ -405,4 +410,4 @@ Plot the time series
 xyplot(steps ~ interval | FlagDay, data = avgStepsIntervalFill, layout = c(1, 2), type = "l")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-26-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-27-1.png) 

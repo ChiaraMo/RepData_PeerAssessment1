@@ -101,7 +101,11 @@ head(totalStepsDay)
 
 Plot the histogram of total number of steps taken each day. 
 
-Graphics device used is the screen device.
+Prepare the output file Histogram1.png and define the area
+```{r}
+png(file="Histogram1.png", height=480, width=480)
+````
+        
 ```{r}
 hist(totalStepsDay$steps,
      breaks = 10,

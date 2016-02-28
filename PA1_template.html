@@ -151,7 +151,8 @@ activity_file &lt;- paste(getwd(), &quot;/data/activity.csv&quot;, sep = &quot;&
 ## 5 2012-10-06 15420
 ## 6 2012-10-07 11015</code></pre>
 <p>Plot the histogram of total number of steps taken each day.</p>
-<p>Graphics device used is the screen device.</p>
+<p>Prepare the output file Histogram1.png and define the area</p>
+<pre class="r"><code>png(file=&quot;Histogram1.png&quot;, height=480, width=480)</code></pre>
 <pre class="r"><code>hist(totalStepsDay$steps,
      breaks = 10,
      col = &quot;red&quot;, 
