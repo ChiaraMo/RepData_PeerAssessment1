@@ -240,13 +240,28 @@ head(avgStepsInterval)
 ## 6       25 2.0943396
 ```
 
+Prepare the output file TimeSeries1.png and define the area
+
+```r
+png(file="TimeSeries1.png", height=480, width=480)
+```
+
 Create the time series plot
 
 ```r
 xyplot(steps ~ interval, data = avgStepsInterval, type = "l", main = "Daily Activity Pattern")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-15-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-16-1.png) 
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   3
+```
 
 Find the maximum of number of steps taken in a 5-minute interval, averaged across all days
 
@@ -335,6 +350,12 @@ Using the new dataset, without the missing values, create summary data to be plo
 totalStepsDayFill <- aggregate(steps ~ date, activityfill, sum)
 ```
 
+Prepare the output file Histogram2.png and define the area
+
+```r
+png(file="Histogram2.png", height=480, width=480)
+```
+
 Plot the histogram of total number of steps taken each day. 
 Graphics devide used is the screen device.
 
@@ -350,7 +371,16 @@ hist(totalStepsDayFill$steps,
 rug(totalStepsDayFill$steps)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-22-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-24-1.png) 
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   3
+```
 
 Calculate and report the **mean** and **median** total number of steps taken per day
 
@@ -413,10 +443,25 @@ Calculate the average number of steps taken, averaged across all weekday days or
 avgStepsIntervalFill <- aggregate(steps ~ FlagDay + interval, activityfill, mean)
 ```
 
+Prepare the output file TimeSeries2.png and define the area
+
+```r
+png(file="TimeSeries2.png", height=480, width=480)
+```
+
 Plot the time series
 
 ```r
 xyplot(steps ~ interval | FlagDay, data = avgStepsIntervalFill, layout = c(1, 2), type = "l")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-27-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-30-1.png) 
+
+```r
+dev.off()
+```
+
+```
+## png 
+##   3
+```
