@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 This assignment will be described in multiple parts. You will need to write a report that answers the questions detailed below. Ultimately, you will need to complete the entire assignment in a **single R markdown** document that can be processed by **knitr** and be transformed into an HTML file.
 
@@ -13,7 +8,8 @@ For the plotting aspects of this assignment, feel free to use any plotting syste
 
 ### Loading the necessary packages
 
-```{r}
+
+```r
 library(lattice)
 ```
 
@@ -29,7 +25,8 @@ After download, unzip the raw data and extract the **.csv** data set.
 
 **Note:** check if you have set the correct working directory before running the code.
 
-```{r}
+
+```r
 ## create a directory named "data" where to place the downloaded data
 data <- "data"
 if(!file.exists(data)){
@@ -50,30 +47,56 @@ activity_file <- paste(getwd(), "/data/activity.csv", sep = "")
         if(!file.exists(activity_file)){
                 unzip(archive, list = FALSE, overwrite = FALSE, exdir = data)
         }
-
 ```
 
 Load the raw data into ```R```
-```{r}
+
+```r
 activity <- read.csv(activity_file)
-````
+```
 
 Check dimention of the loaded data:
-```{r}
+
+```r
 dim(activity)
-````
+```
+
+```
+## [1] 17568     3
+```
 
 Check ``activity`` first raws and structure
-```{r}
-head(activity)
 
+```r
+head(activity)
+```
+
+```
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
+```
+
+```r
 str(activity)
-````
+```
+
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+```
 
 Create a new column ``date1``, which contain the date in a **Date** format. It will be used to compare activity between weekdays and weekend
-```{r}
+
+```r
 activity$date1 <- as.Date(as.character(activity$date))
-````
+```
 
 Data looks ready to start the exploratory analysis.
 
@@ -88,21 +111,41 @@ For this part of the assignment, you can ignore the missing values in the datase
 For this part of the assignment, missing values in the dataset will be ignored.
 
 Create summary data to be plotted: total number of steps taken each day
-```{r}
+
+```r
 totalStepsDay <- aggregate(steps ~ date, activity, sum)
-````
+```
 
 ```totalStepsDay``` is a new data set with 2 dimentions. It contains the total number of steps taken for each day of the experiment (October and November, 2012)
 
-```{r}
+
+```r
 dim(totalStepsDay)
+```
+
+```
+## [1] 53  2
+```
+
+```r
 head(totalStepsDay)
-````
+```
+
+```
+##         date steps
+## 1 2012-10-02   126
+## 2 2012-10-03 11352
+## 3 2012-10-04 12116
+## 4 2012-10-05 13294
+## 5 2012-10-06 15420
+## 6 2012-10-07 11015
+```
 
 Plot the histogram of total number of steps taken each day. 
 
 Graphics device used is the screen device.
-```{r}
+
+```r
 hist(totalStepsDay$steps,
      breaks = 10,
      col = "red", 
@@ -112,24 +155,44 @@ hist(totalStepsDay$steps,
 
 ## add rug representation of the data to the plot to show the density of the observation:
 rug(totalStepsDay$steps)
-````
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
 
 Calculate and report the **mean** and **median** total number of steps taken per day
 
-```{r}
+
+```r
 steps_statistics <- summary(totalStepsDay$steps)
 steps_statistics
-````
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    8841   10760   10770   13290   21190
+```
 
 In average, the number of steps taken each day is:
-```{r}
+
+```r
 steps_statistics["Mean"]
-````
+```
+
+```
+##  Mean 
+## 10770
+```
 
 For the ``50%`` of the days, the total number of steps taken during the day is above:
-````{r}
+
+```r
 steps_statistics["Median"]
-````
+```
+
+```
+## Median 
+##  10760
+```
 
 ## What is the average daily activity pattern?
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
@@ -138,33 +201,64 @@ steps_statistics["Median"]
 ### Code
 
 Create summary data to be plotted: average number of steps taken in the 5-minute interval across all days
-```{r}
+
+```r
 avgStepsInterval <- aggregate(steps ~ interval, activity, mean)
 
 dim(avgStepsInterval)
+```
 
+```
+## [1] 288   2
+```
+
+```r
 head(avgStepsInterval)
-````
+```
+
+```
+##   interval     steps
+## 1        0 1.7169811
+## 2        5 0.3396226
+## 3       10 0.1320755
+## 4       15 0.1509434
+## 5       20 0.0754717
+## 6       25 2.0943396
+```
 
 Create the time series plot
-```{r}
+
+```r
 xyplot(steps ~ interval, data = avgStepsInterval, type = "l", main = "Daily Activity Pattern")
-````
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
 
 Find the maximum of number of steps taken in a 5-minute interval, averaged across all days
 
-```{r}
+
+```r
 steps_statistics_2 <- summary(avgStepsInterval$steps)
 steps_statistics_2
-````
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   2.486  34.110  37.380  52.830 206.200
+```
 
 Find the 5-minute interval where the maximum number of steps is taken
-```{r}
+
+```r
 ## find the row index of the maximum number of steps averaged across all days
 index_max <- which.max(avgStepsInterval$steps)
 interval_max_steps <- avgStepsInterval[index_max, 1]
 interval_max_steps
-````
+```
+
+```
+## [1] 835
+```
 
 ## Imputing missing values
 
@@ -182,17 +276,22 @@ Note that there are a number of days/intervals where there are missing values (c
 
 The number of missing values in the dataset ````activity.csv``` is
 
-```{r}
+
+```r
 sum(is.na(activity))
-````
+```
+
+```
+## [1] 2304
+```
 
 This means that in the ``activity`` dataset there **2304** rows with **NAs**.
 
 We will fill in all of the missing values in the dataset with the mean for the 5-minutes interval.
 
 Create the new dataset with the missing data filled in
-```{r}
 
+```r
 ##create a second dataset where NA values will be filled in
 activityfill <- activity
 
@@ -204,21 +303,28 @@ for (i in 1:17568){
         }
         
 }
-````
+```
 
 Check that the new data frame ```activityfill``` does not have any missing value
-```{r}
+
+```r
 sum(is.na(activityfill$steps))
-````
+```
+
+```
+## [1] 0
+```
 
 Using the new dataset, without the missing values, create summary data to be plotted: total number of steps taken each day
-```{r}
+
+```r
 totalStepsDayFill <- aggregate(steps ~ date, activityfill, sum)
-````
+```
 
 Plot the histogram of total number of steps taken each day. 
 Graphics devide used is the screen device.
-```{r}
+
+```r
 hist(totalStepsDayFill$steps,
      breaks = 10,
      col = "red", 
@@ -228,14 +334,22 @@ hist(totalStepsDayFill$steps,
 
 ## add rug representation of the data to the plot:
 rug(totalStepsDayFill$steps)
-````
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-21-1.png) 
 
 Calculate and report the **mean** and **median** total number of steps taken per day
 
-```{r}
+
+```r
 steps_statistics_fill <- summary(totalStepsDayFill$steps)
 steps_statistics_fill
-````
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    9819   10770   10770   12810   21190
+```
 
 Mean has not changed compared to the first estimates from the first part of the assignment. 
 Median is now equal to the mean. 
@@ -250,13 +364,24 @@ For this part the ``weekdays()`` function may be of some help here. Use the data
 
 ### Code
 In order to create a new factor variable to distinguish weekdays and weekend, we create a new variable in the dataset with the day of the week
-```{r}
+
+```r
 activityfill$Wday <- weekdays(activityfill$date1)
 str(activityfill)
-````
+```
+
+```
+## 'data.frame':	17568 obs. of  5 variables:
+##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
+##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ date1   : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ Wday    : chr  "Monday" "Monday" "Monday" "Monday" ...
+```
 
 Create the factor variable with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day
-```{r}
+
+```r
 for (i in 1:17568){
         if(activityfill$Wday[i] %in% c("Saturday", "Sunday"))
                 activityfill$FlagDay[i] <- "weekend"
@@ -265,15 +390,19 @@ for (i in 1:17568){
 
 ##convert the new column FlagDay into a factor variable
 activityfill$FlagDay <- as.factor(activityfill$FlagDay)
-````
+```
 
 Calculate the average number of steps taken, averaged across all weekday days or weekend days
 
-```{r}
+
+```r
 avgStepsIntervalFill <- aggregate(steps ~ FlagDay + interval, activityfill, mean)
-````
+```
 
 Plot the time series
-```{r}
+
+```r
 xyplot(steps ~ interval | FlagDay, data = avgStepsIntervalFill, layout = c(1, 2), type = "l")
-````
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-26-1.png) 
